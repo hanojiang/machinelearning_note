@@ -5,12 +5,12 @@
     \title{逻辑回归总结}
     \date{2017-9-28}
     \maketitle
-    
+
     对于线性回归模型$y=\omega^T+b$输出的预测值$y$都是实值，考虑二分类任务，$y_i\in\{0,1\}$。为了将实值$y$对应到离散值,使用了 sigmoid 函数。$y=\frac{1}{1+e^{-z}}=\frac{1}{1+e^{-(\omega^T+b)}}$,对$\omega$和$b$作以下变换，令$\beta=(\omega;b)$,$\hat{x}=(x;1)$,则$y=\omega^T+b=\beta^T\hat{x}$,带入 sigmoid 函数。
 	\begin{equation}\label{sigmoid}
 		y=\frac{1}{1+e^{-\beta^T\hat{x}}}
 	\end{equation}
-	
+
 	对 sigmoid 函数，$z=\ln\frac{y}{1-y}$,则式\eqref{sigmoid}可以变为
 	\begin{equation}\label{probability}
 		\ln\frac{y}{1-y}=\beta^T\hat{x}
@@ -30,7 +30,7 @@
 	\end{align}
 	n个独立的样本出现的似然函数为(因为每个样本都是独立的，所以n个样本出现的概率就是他们各自出现的概率相乘):
 	\begin{equation}
-	L(\theta)=\prod	P(y_i|\beta;\hat{x_i})	
+	L(\theta)=\prod	P(y_i|\beta;\hat{x_i})
 	\end{equation}
 	对上式取对数，
 	\begin{equation}\label{siran}
@@ -41,41 +41,41 @@
 		&=\sum \left[ y_i\log P(y_i=1|\beta;\hat{x_i}) + (1-y_i)\log(1-P(y_i=1|\beta;\hat{x_i}))\right]\\
 		&=\sum \left( y_i \log P(y_i=1) - y_i \log(P(y_i=0))+\log(P(y_i=0))\right)\\
 		&=\sum \left( y_i \log \frac{P(y_i=1)}{P(y_i=0)} + log(\frac{1}{1+e^{\beta^T\hat{x_i}}})\right)\\
-		&=\sum \left( 	
+		&=\sum \left(
 		y_i\beta^T\hat{x_i}-log(1+e^{\beta^T\hat{x_i}})
 		\right)
-		\end{split}	 	
+		\end{split}
 	\end{equation}
 	为了优化求解，对目标函数取反，以进行最小值优化。
-	
+
 	式\eqref{siran}	取反后，对$\beta$求导数：
 	\begin{equation}\label{key}
 	\begin{split}
 	\mathrm{d}L(\theta)
-	&=\sum \left( 
+	&=\sum \left(
 	\frac{e^{\beta^T\hat{x_i}} \mathrm{d}\beta^T\hat{x_i}}{1+e^{\beta^T\hat{x_i}} }
 	- y_i \mathrm{d} \beta^T \hat{x_i}
 	\right)\\
-	&=\mathrm{tr}\sum \left( 
+	&=\mathrm{tr}\sum \left(
 	\frac{\hat{x_i}e^{\beta^T\hat{x_i}} \mathrm{d}\beta^T}{1+e^{\beta^T\hat{x_i}} }
-	- \hat{x_i}y_i \mathrm{d} \beta^T 
+	- \hat{x_i}y_i \mathrm{d} \beta^T
 	\right)\\
 	&=\sum \hat{x_i}(P(y_i=1|\beta;\hat{x_i})-y_i)\mathrm{d}\beta^T
-	\end{split}	
+	\end{split}
 	\end{equation}
 
-	\begin{equation*}	
-		\frac{\partial \mathrm{d}L(\theta)}{\partial \beta^T}=\sum \hat{x_i}^T(P(y_i=1|\beta;\hat{x_i})-y_i)		
+	\begin{equation*}
+		\frac{\partial \mathrm{d}L(\theta)}{\partial \beta^T}=\sum \hat{x_i}^T(P(y_i=1|\beta;\hat{x_i})-y_i)
 	\end{equation*}
-	
-	\begin{equation}	
-	\frac{\partial \mathrm{d}L(\theta)}{\partial \beta}=\sum \hat{x_i}(P(y_i=1|\beta;\hat{x_i})-y_i)		
+
+	\begin{equation}
+	\frac{\partial \mathrm{d}L(\theta)}{\partial \beta}=\sum \hat{x_i}(P(y_i=1|\beta;\hat{x_i})-y_i)
 	\end{equation}
 	运用梯度下降法进行优化求解：
-	
+
 	\[
 			\beta_{n+1}=\beta_{n}-\alpha\frac{\partial \mathrm{d}L(\theta)}{\partial \beta}
 	\]
-	
-	
+
+
 \end{document}

@@ -71,10 +71,10 @@ open('train.csv','r',encoding='utf-8')
 ###csv模块读写
 ```python
 list_file = []
-with open('train.csv','rb') as csv_file:  
-	all_lines=cvs.reader(csv_file)  
-	for one_line in all_lines:  
-		list_file.append(one_line)  
+with open('train.csv','rb') as csv_file:
+	all_lines=cvs.reader(csv_file)
+	for one_line in all_lines:
+		list_file.append(one_line)
 ```
 ###numpy模块读写
 
@@ -113,4 +113,3 @@ out:
 35887432#切片修改
 [1, 11, 3, 4, 5, 6]#最终值改变了
 ```
-
