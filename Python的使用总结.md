@@ -1,8 +1,10 @@
-#Python的使用总结
+# Python的使用总结
 
-##编码与解码
+[toc]
 
-###基础知识
+## 编码与解码
+
+### 基础知识
 
 * ASCII：包含127个字符，英文字母、数字和其它一些字符。1个字节
 * Unicode：将各种语言统一编码，2个字节
@@ -24,7 +26,7 @@
 
 浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器。
 
-###python中的编码与解码
+### python中的编码与解码
 
 1. python3中的字符串是Unicode编码的。
 
@@ -55,11 +57,11 @@ UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-1: ordin
 >>> b'\xe4\xb8\xad\xe6\x96\x87'.decode('utf-8')
 '中文'
 ```
-###编码要点
+### 编码要点
 1. 编码和解码是对数据在Unicode码和其它码之间的转换。
 2. 知道文件的编码格式，就用对应的格式编码。encoding()
 3. 想将数据保存为何种格式，就用对应的格式解码保存。decoding().
-##csv文件的读写
+## csv文件的读写
 
 对含有中文的文件读写，编码默认的格式是GBK，所以，文件的格式不正确，会出现解码错误。原因是将文件内容编码为Unicode码的格式不正确，如原文件.txt的编码格式是‘UTF-8’，转出的Unicode码，解码为‘GBK'，出错。
 
@@ -68,7 +70,7 @@ UnicodeEncodeError: 'ascii' codec can't encode characters in position 0-1: ordin
 ```python
 open('train.csv','r',encoding='utf-8')
 ```
-###csv模块读写
+### csv模块读写
 ```python
 list_file = []
 with open('train.csv','rb') as csv_file:
@@ -76,7 +78,7 @@ with open('train.csv','rb') as csv_file:
 	for one_line in all_lines:
 		list_file.append(one_line)
 ```
-###numpy模块读写
+### numpy模块读写
 
 ```python
 tmp = np.loadtxt("train.csv", dtype=np.str, delimiter=",")
@@ -86,9 +88,9 @@ tmp = np.loadtxt(open("train.txt", encoding='utf8'), dtype=np.str, delimiter=','
 
 
 
-###panda模块读写
+### panda模块读写
 
-##值传递or引用传递
+## 值传递or引用传递
 
 python不允许程序员选择采用传值还是传引用。Python参数传递采用的肯定是“传对象引用”的方式。这种方式相当于传值和传引用的一种综合。如果函数收到的是一个可变对象（比如字典或者列表）的引用，就能修改对象的原始值－－相当于通过“传引用”来传递对象。如果函数收到的是一个不可变对象（比如数字、字符或者元组）的引用，就不能直接修改原始对象－－相当于通过“传值'来传递对象。
 
@@ -113,3 +115,9 @@ out:
 35887432#切片修改
 [1, 11, 3, 4, 5, 6]#最终值改变了
 ```
+## 带下划线的变量、函数
+
+
+* 双下划綫开头和结尾：**特殊函数**,python内置变量名。如类成员的 \_\_init\_\_、\_\_del\_\_、\_\_add\_\_、\_\_getitem\_\_ 等，以及全局的 \_\_file\_\_、\_\_name\_\_ 等。 Python 官方推荐永远不要将这样的命名方式应用于自己的变量或函数，而是按照文档说明来使用。
+* 单下划线开头：表示私有属性或函数，如果使用 from a_module import * 导入时，这部分变量和函数不会被导入。而如果使用 import a_module 这样导入模块，仍然可以用 a_module._some_var 这样的形式访问到这样的对象。和静态语言中严格的静态方法和函数有所不同。
+* 双下划线开头：的命名形式在 Python 的类成员中使用表示名字改编 (Name Mangling)，即如果有一 Test 类里有一成员 __x，那么 dir(Test) 时会看到 _Test__x 而非 __x。这是为了**避免该成员的名称与子类中的名称冲突**。但要注意这要求该名称末尾没有下划线。
